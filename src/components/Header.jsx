@@ -1,8 +1,23 @@
-import {Avatar, Layout} from "antd";
+import {Avatar, Dropdown, Layout} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import logo from "@/assets/images/logo.png"
 
 const {Header} = Layout;
+
+const items = [
+  {
+    label: 'Anonymous user',
+    key: '0',
+  },
+  {
+    label: 'Гость',
+    key: '1',
+  },
+  {
+    label: 'Войти через google',
+    key: '3',
+  },
+];
 
 const AppHeader = () => {
   return (
@@ -12,7 +27,15 @@ const AppHeader = () => {
       </div>
 
       <div className="header-avatar">
-        <Avatar size={45} icon={<UserOutlined />} />
+        <Dropdown
+          menu={{items}}
+          trigger={['click']}
+          arrow
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <Avatar size={40} icon={<UserOutlined />} />
+          </a>
+        </Dropdown>
       </div>
     </Header>
   )
