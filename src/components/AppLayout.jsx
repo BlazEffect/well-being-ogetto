@@ -18,7 +18,9 @@ const AppLayout = () => {
         <Sider
           width={250}
           style={{
+            margin: '24px 0',
             background: colorBgContainer,
+            borderRadius: borderRadiusLG
           }}
         >
           <SideBar/>
@@ -30,7 +32,7 @@ const AppLayout = () => {
               padding: 24,
               margin: 0,
               background: colorBgContainer,
-              borderRadius: borderRadiusLG,
+              borderRadius: borderRadiusLG
             }}
           >
             <AppRouter/>
