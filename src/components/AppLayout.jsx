@@ -1,14 +1,10 @@
-import AppRouter from "@/router/AppRouter.jsx";
-import {Layout} from "antd";
+import {Layout} from 'antd';
+import AppHeader from "@/components/Header";
 
 const AppLayout = () => {
-  const { Content } = Layout;
-
   return (
-    <Layout>
-      <Content>
-        <AppRouter/>
-      </Content>
+    <Layout style={{minHeight: '100vh'}}>
+      <AppHeader/>
     </Layout>
   )
 }
