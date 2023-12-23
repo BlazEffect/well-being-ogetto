@@ -23,7 +23,6 @@ const AuthProvider = ({children}) => {
       isLoading,
       authData,
       login,
-      logout,
     };
   }, [isLoggedIn, isLoading, authData]);
 
