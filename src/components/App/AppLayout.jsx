@@ -1,7 +1,7 @@
 import {Layout, theme} from 'antd';
 import AppHeader from "@/components/Header";
 import AppRouter from "@/router/AppRouter";
-import SideBar from "@/components/SideBar";
+import SideBar from "@/components/App/SideBar";
 
 const { Content, Sider } = Layout;
 
