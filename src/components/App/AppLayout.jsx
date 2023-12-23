@@ -2,6 +2,7 @@ import {Layout, theme} from 'antd';
 import AppHeader from "@/components/Header";
 import AppRouter from "@/router/AppRouter";
 import SideBar from "@/components/App/SideBar";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 const { Content, Sider } = Layout;
 
@@ -12,7 +13,9 @@ const AppLayout = () => {
 
   return (
     <Layout style={{minHeight: '100vh'}}>
-      <AppHeader/>
+      <GoogleOAuthProvider clientId="646137288373-6ldva045om0cl6p9bijei4o62qhbrtq1.apps.googleusercontent.com">
+        <AppHeader/>
+      </GoogleOAuthProvider>
 
       <Layout>
         <Sider

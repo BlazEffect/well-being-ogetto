@@ -4,6 +4,7 @@ import SideBar from "@/components/Admin/SideBar";
 import AdminRouter from "@/router/AdminRouter";
 import {useContext} from "react";
 import {AuthContext} from "@/contexts/AuthContext.jsx";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 const { Content, Sider } = Layout;
 
@@ -16,7 +17,9 @@ const AdminLayout = () => {
 
   return (
     <Layout style={{minHeight: '100vh'}}>
-      <AppHeader/>
+      <GoogleOAuthProvider clientId="646137288373-6ldva045om0cl6p9bijei4o62qhbrtq1.apps.googleusercontent.com">
+        <AppHeader/>
+      </GoogleOAuthProvider>
 
       <Layout>
         <Sider
@@ -39,13 +42,15 @@ const AdminLayout = () => {
               borderRadius: borderRadiusLG
             }}
           >
-            {isLoggedIn ? (
+            <AdminRouter/>
+
+            {/*{isLoggedIn ? (
               <AdminRouter/>
             ) : (
               <div>
                 Вы не авторизированны, чтобы зайти в панель администратора
               </div>
-            )}
+            )}*/}
           </Content>
         </Layout>
       </Layout>
