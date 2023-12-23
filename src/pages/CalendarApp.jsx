@@ -33,6 +33,13 @@ const CalendarApp = () => {
     []
   );
 
+  const handleNavigate = useCallback(
+    (newDate) => {
+      setDefaultDate(newDate);
+    },
+    [setDefaultDate]
+  );
+
   useEffect(() => {
     if (dateYear && dateMonth && dateDay) {
       setDefaultDate(new Date(dateYear, dateMonth - 1, dateDay));
@@ -58,7 +65,7 @@ const CalendarApp = () => {
     <div>
       <Calendar
         date={defaultDate}
-        defaultDate={defaultDate}
+        onNavigate={handleNavigate}
         defaultView={Views.WEEK}
         events={myEvents}
         localizer={localizer}
