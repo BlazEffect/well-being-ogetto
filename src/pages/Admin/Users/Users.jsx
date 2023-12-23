@@ -37,8 +37,7 @@ const Users = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const usersData = await axios.get('/api/all_user');
-    setUsers(usersData.data.users);
+    setUsers(await getAllUsers());
     setLoading(false);
   }
 
