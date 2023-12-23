@@ -9,8 +9,9 @@ const AuthProvider = ({children}) => {
   const [authData, setAuthData] = useState({});
 
   useEffect(() => {
-    const storedJwt = localStorage.getItem("jwt1");
-    if (storedJwt) {
+    const storedData = localStorage.getItem("userData");
+    if (storedData) {
+      setAuthData(storedData);
       setIsLoggedIn(true);
     }
     setIsLoading(false);
