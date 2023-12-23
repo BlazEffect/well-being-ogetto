@@ -2,12 +2,18 @@ import {Avatar, Dropdown, Layout} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import logo from "@/assets/images/logo.png"
 import {useGoogleLogin} from "@react-oauth/google";
+import {AuthContext} from "@/contexts/AuthContext";
+import {useContext} from "react";
 
 const {Header} = Layout;
 
 const AppHeader = () => {
-  const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
+  const { login } = useContext(AuthContext);
+
+  const getGoogleToken = useGoogleLogin({
+    onSuccess: tokenResponse => {
+      login(tokenResponse);
+    },
     onError: errorResponse => console.log(errorResponse)
   });
 
@@ -21,7 +27,7 @@ const AppHeader = () => {
       key: '1',
     },
     {
-      label: <a onClick={() => login()}>Войти через google</a>,
+      label: <a onClick={() => getGoogleToken()}>Войти через google</a>,
       key: '3',
     },
   ];

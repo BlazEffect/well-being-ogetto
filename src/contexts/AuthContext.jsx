@@ -1,5 +1,5 @@
 import {createContext, useState, useEffect, useMemo} from "react";
-import {login} from "@/services/AuthService";
+import * as authService from "@/services/AuthService";
 
 export const AuthContext = createContext({});
 
@@ -17,12 +17,18 @@ const AuthProvider = ({children}) => {
     setIsLoading(false);
   }, []);
 
+  const login = (tokenResponse) => {
+    setIsLoading(true);
+    authService.login(tokenResponse);
+    setIsLoading(false);
+  }
+
   const authValue = useMemo(() => {
     return {
       isLoggedIn,
       isLoading,
       authData,
-      login,
+      login
     };
   }, [isLoggedIn, isLoading, authData]);
 
