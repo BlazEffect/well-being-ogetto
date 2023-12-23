@@ -76,3 +76,7 @@ h6 {
 .header-logo__image {
     vertical-align: middle;
 }
+
+.react-calendar {
+    border: none;
+}
