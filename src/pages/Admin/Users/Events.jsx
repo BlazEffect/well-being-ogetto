@@ -1,11 +1,15 @@
 import {Space, Table} from "antd";
 import {useEffect, useState} from "react";
 import {getAllEvents} from "@/services/EventService";
+import moment from "moment";
+
+moment.tz.setDefault('Europe/Moscow');
+moment.locale('ru');
 
 const columns = [
   {
     title: 'Название мероприятия',
-    dataIndex: 'title',
+    dataIndex: 'name',
     key: 'title',
     render: (text) => <a>{text}</a>,
   },
@@ -18,11 +22,13 @@ const columns = [
     title: 'Время начала',
     dataIndex: 'time_start',
     key: 'time_start',
+    render: (text) => moment.unix(text / 1000).format("LLLL")
   },
   {
     title: 'Время конца',
     dataIndex: 'time_end',
     key: 'time_end',
+    render: (text) => moment.unix(text / 1000).format("LLLL")
   },
   {
     title: 'Пользователь',
