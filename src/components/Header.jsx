@@ -3,13 +3,14 @@ import {UserOutlined} from "@ant-design/icons";
 import logo from "@/assets/images/logo.png"
 import {useGoogleLogin} from "@react-oauth/google";
 import {AuthContext} from "@/contexts/AuthContext";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
 const {Header} = Layout;
 
 const AppHeader = () => {
-  const { login } = useContext(AuthContext);
+  const { isLoggedIn, authData, login, logout } = useContext(AuthContext);
+  const [items, setItems] = useState([]);
 
   const getGoogleToken = useGoogleLogin({
     onSuccess: tokenResponse => {
@@ -18,20 +19,34 @@ const AppHeader = () => {
     onError: errorResponse => console.log(errorResponse)
   });
 
-  const items = [
-    {
-      label: 'Anonymous user',
-      key: '0',
-    },
-    {
-      label: 'Гость',
-      key: '1',
-    },
-    {
-      label: <a onClick={() => getGoogleToken()}>Войти через google</a>,
-      key: '3',
-    },
-  ];
+  const roleName = () => {
+    switch (authData.privilege) {
+      case 0:
+        return 'Пользователь';
+      case 1:
+        return 'Организатор';
+      case 2:
+        return 'Админ';
+    }
+  }
+
+  useEffect(() => {
+    setItems([
+      {
+        label: isLoggedIn ? authData.first_name + ' ' + authData.last_name : 'Гостевой аккаунт',
+        key: '0',
+      },
+      {
+        label: isLoggedIn ? roleName() : 'Гость',
+        key: '1',
+      },
+      {
+        label: isLoggedIn ? <a onClick={() => logout()}>Выйти</a> :
+          <a onClick={() => getGoogleToken()}>Войти через google</a>,
+        key: '3',
+      },
+    ]);
+  }, [isLoggedIn]);
 
   return (
     <Header className="header">
