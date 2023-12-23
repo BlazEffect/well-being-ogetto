@@ -1,6 +1,6 @@
 import 'react-calendar/dist/Calendar.css';
 import {Menu} from "antd";
-import {LaptopOutlined, NotificationOutlined, UserOutlined} from "@ant-design/icons";
+import {CalendarOutlined, UserOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 
 const menuItems = [
@@ -28,8 +28,8 @@ const SideBar = () => {
         </Menu.Item>
         <Menu.Item key="events">
           <Link to="/admin/event">
-            <UserOutlined/>
-            Пользователи
+            <CalendarOutlined />
+            События
           </Link>
         </Menu.Item>
       </Menu>
