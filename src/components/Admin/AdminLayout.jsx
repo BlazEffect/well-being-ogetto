@@ -1,6 +1,6 @@
 import {Layout, theme} from "antd";
 import AppHeader from "@/components/Header";
-import SideBar from "@/components/App/SideBar";
+import SideBar from "@/components/Admin/SideBar";
 import AdminRouter from "@/router/AdminRouter";
 import {useContext} from "react";
 import {AuthContext} from "@/contexts/AuthContext.jsx";
