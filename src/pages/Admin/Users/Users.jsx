@@ -1,6 +1,6 @@
 import {Space, Table} from "antd";
 import {useEffect, useState} from "react";
-import axios from "axios";
+import {getAllUsers} from "@/services/UserService";
 
 const columns = [
   {
