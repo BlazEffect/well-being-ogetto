@@ -4,6 +4,7 @@ import logo from "@/assets/images/logo.png"
 import {useGoogleLogin} from "@react-oauth/google";
 import {AuthContext} from "@/contexts/AuthContext";
 import {useContext} from "react";
+import {Link} from "react-router-dom";
 
 const {Header} = Layout;
 
@@ -35,7 +36,9 @@ const AppHeader = () => {
   return (
     <Header className="header">
       <div className="header-logo">
-        <img className="header-logo__image" src={logo} alt="logo"/>
+        <Link to="/">
+          <img className="header-logo__image" src={logo} alt="logo"/>
+        </Link>
       </div>
 
       <div className="header-avatar">
