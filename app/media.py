@@ -1,5 +1,4 @@
 from http.client import HTTPException
-
 from fastapi import APIRouter, Depends
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
@@ -8,6 +7,10 @@ from models.core import Card, User, Participation
 from models.database import get_db
 
 media_router = APIRouter(prefix='/api/media')
+
+
+def get_user_by_token(token: str, session: Session):
+    return session.query(User).filter(User.token == token).first()
 
 
 def get_user_info(user_id: int, session: Session):
@@ -40,17 +43,8 @@ def datecard(date: str, session: Session = Depends(get_db)):
 @media_router.get('/byuser/{user_id}')
 def user_cards(user_id: int, session: Session = Depends(get_db)):
     cards = session.query(Card).filter(Card.user_id == user_id).order_by(desc(Card.time_start)).all()
-    cards_data = []
-    for card in cards:
-        cards_data.append({
-            "id": card.id,
-            "name": card.name,
-            "title": card.title,
-            "time_start": card.time_start,
-            "time_end": card.time_end,
-            "user_info": get_user_info(card.user_id, session)
-        })
-    return cards_data
+    serialized_cards = [card.serialize() for card in cards]
+    return serialized_cards
 
 
 @media_router.post('/join_card/{card_id}')
@@ -83,15 +77,28 @@ def search_card_by_title(title: str, session: Session = Depends(get_db)):
 
     if not matching_cards:
         raise HTTPException(404)
+    serialized_cards = [card.serialize() for card in matching_cards]
+    return serialized_cards
 
-    cards_data = []
-    for card in matching_cards:
-        cards_data.append({
-            "id": card.id,
-            "name": card.name,
-            "title": card.title,
-            "time_start": card.time_start,
-            "time_end": card.time_end,
-            "user_info": get_user_info(card.user_id, session)
-        })
-    return {"matching_cards": cards_data}
+
+@media_router.get('/all_cards')
+def get_all_cards(session: Session = Depends(get_db)):
+    cards = session.query(Card).all()
+    serialized_cards = [card.serialize() for card in cards]
+    return {"cards":serialized_cards}
+
+
+@media_router.post('/like')
+def like_card(card_id: int, token: str, session: Session = Depends(get_db)):
+    user = get_user_by_token(token, session)
+    if user:
+        card = session.query(Card).filter(Card.id == card_id).first()
+        if card:
+            user.liked_cards.append(card)
+            card.likes += 1
+            session.commit()
+            return {"message": "Card liked successfully"}
+        else:
+            raise HTTPException(404,"Card not found")
+    else:
+        raise HTTPException(401, "Invalid token")

@@ -446,8 +446,8 @@
     <routine id="176" parent="1" name="rtreenode"/>
     <schema id="177" parent="1" name="main">
       <Current>1</Current>
-      <IntrospectionTimestamp>2023-12-23.20:41:53.314</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2023-12-23.17:41:53</LocalIntrospectionTimestamp>
+      <IntrospectionTimestamp>2023-12-24.02:15:10.143</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2023-12-23.23:15:10</LocalIntrospectionTimestamp>
     </schema>
     <argument id="178" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1472,215 +1472,259 @@
     <table id="518" parent="177" name="Card"/>
     <table id="519" parent="177" name="Participation"/>
     <table id="520" parent="177" name="User"/>
-    <table id="521" parent="177" name="Video"/>
-    <table id="522" parent="177" name="alembic_version"/>
-    <table id="523" parent="177" name="sqlite_master">
+    <table id="521" parent="177" name="UserCardLike"/>
+    <table id="522" parent="177" name="Video"/>
+    <table id="523" parent="177" name="alembic_version"/>
+    <table id="524" parent="177" name="sqlite_master">
       <System>1</System>
     </table>
-    <column id="524" parent="518" name="id">
+    <column id="525" parent="518" name="id">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="525" parent="518" name="name">
+    <column id="526" parent="518" name="name">
       <DasType>VARCHAR|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="526" parent="518" name="title">
+    <column id="527" parent="518" name="description">
       <DasType>VARCHAR|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="527" parent="518" name="time_start">
+    <column id="528" parent="518" name="time_start">
       <DasType>DATETIME|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="528" parent="518" name="time_end">
+    <column id="529" parent="518" name="time_end">
       <DasType>DATETIME|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="529" parent="518" name="user_id">
+    <column id="530" parent="518" name="user_id">
       <DasType>INTEGER|0s</DasType>
       <Position>6</Position>
     </column>
-    <foreign-key id="530" parent="518">
+    <column id="531" parent="518" name="likes">
+      <DasType>INTEGER|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <foreign-key id="532" parent="518">
       <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <index id="531" parent="518" name="ix_Card_name">
+    <index id="533" parent="518" name="ix_Card_name">
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="532" parent="518" name="ix_Card_title">
-      <ColNames>title</ColNames>
+    <index id="534" parent="518" name="ix_Card_description">
+      <ColNames>description</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="533" parent="518" name="ix_Card_id">
+    <index id="535" parent="518" name="ix_Card_id">
       <ColNames>id</ColNames>
     </index>
-    <index id="534" parent="518" name="ix_Card_time_start">
+    <index id="536" parent="518" name="ix_Card_time_start">
       <ColNames>time_start</ColNames>
     </index>
-    <index id="535" parent="518" name="ix_Card_time_end">
+    <index id="537" parent="518" name="ix_Card_time_end">
       <ColNames>time_end</ColNames>
     </index>
-    <key id="536" parent="518">
+    <index id="538" parent="518" name="ix_Card_likes">
+      <ColNames>likes</ColNames>
+    </index>
+    <key id="539" parent="518">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>ix_Card_id</UnderlyingIndexName>
     </key>
-    <column id="537" parent="519" name="id">
+    <column id="540" parent="519" name="id">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="538" parent="519" name="user_id">
+    <column id="541" parent="519" name="user_id">
       <DasType>INTEGER|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="539" parent="519" name="event_id">
+    <column id="542" parent="519" name="event_id">
       <DasType>INTEGER|0s</DasType>
       <Position>3</Position>
     </column>
-    <foreign-key id="540" parent="519">
+    <foreign-key id="543" parent="519">
       <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <foreign-key id="541" parent="519">
+    <foreign-key id="544" parent="519">
       <ColNames>event_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>Card</RefTableName>
     </foreign-key>
-    <index id="542" parent="519" name="ix_Participation_id">
+    <index id="545" parent="519" name="ix_Participation_id">
       <ColNames>id</ColNames>
     </index>
-    <key id="543" parent="519">
+    <key id="546" parent="519">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>ix_Participation_id</UnderlyingIndexName>
     </key>
-    <column id="544" parent="520" name="id">
+    <column id="547" parent="520" name="id">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="545" parent="520" name="pfp_url">
+    <column id="548" parent="520" name="pfp_url">
       <DasType>VARCHAR|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="546" parent="520" name="first_name">
+    <column id="549" parent="520" name="first_name">
       <DasType>VARCHAR|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="547" parent="520" name="last_name">
+    <column id="550" parent="520" name="last_name">
       <DasType>VARCHAR|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="548" parent="520" name="mail">
+    <column id="551" parent="520" name="mail">
       <DasType>VARCHAR|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="549" parent="520" name="privilege">
+    <column id="552" parent="520" name="privilege">
       <DasType>INTEGER|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="550" parent="520" name="token">
+    <column id="553" parent="520" name="token">
       <DasType>VARCHAR|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="551" parent="520" name="created_at">
-      <DasType>DATETIME|0s</DasType>
+    <column id="554" parent="520" name="created_at">
+      <DasType>INTEGER|0s</DasType>
       <Position>8</Position>
     </column>
-    <index id="552" parent="520" name="ix_User_mail">
+    <index id="555" parent="520" name="ix_User_mail">
       <ColNames>mail</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="553" parent="520" name="ix_User_id">
+    <index id="556" parent="520" name="sqlite_autoindex_User_1">
+      <ColNames>token</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="557" parent="520" name="ix_User_id">
       <ColNames>id</ColNames>
     </index>
-    <index id="554" parent="520" name="ix_User_pfp_url">
+    <index id="558" parent="520" name="ix_User_pfp_url">
       <ColNames>pfp_url</ColNames>
     </index>
-    <index id="555" parent="520" name="ix_User_first_name">
+    <index id="559" parent="520" name="ix_User_first_name">
       <ColNames>first_name</ColNames>
     </index>
-    <index id="556" parent="520" name="ix_User_last_name">
+    <index id="560" parent="520" name="ix_User_last_name">
       <ColNames>last_name</ColNames>
     </index>
-    <index id="557" parent="520" name="ix_User_privilege">
+    <index id="561" parent="520" name="ix_User_privilege">
       <ColNames>privilege</ColNames>
     </index>
-    <index id="558" parent="520" name="ix_User_created_at">
+    <index id="562" parent="520" name="ix_User_created_at">
       <ColNames>created_at</ColNames>
     </index>
-    <key id="559" parent="520">
+    <key id="563" parent="520">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>ix_User_id</UnderlyingIndexName>
     </key>
-    <column id="560" parent="521" name="id">
+    <key id="564" parent="520">
+      <ColNames>token</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_User_1</UnderlyingIndexName>
+    </key>
+    <column id="565" parent="521" name="id">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="561" parent="521" name="url">
-      <DasType>VARCHAR|0s</DasType>
+    <column id="566" parent="521" name="user_id">
+      <DasType>INTEGER|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="562" parent="521" name="user_id">
+    <column id="567" parent="521" name="card_id">
       <DasType>INTEGER|0s</DasType>
       <Position>3</Position>
     </column>
-    <foreign-key id="563" parent="521">
+    <foreign-key id="568" parent="521">
       <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <index id="564" parent="521" name="ix_Video_id">
+    <foreign-key id="569" parent="521">
+      <ColNames>card_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>Card</RefTableName>
+    </foreign-key>
+    <key id="570" parent="521">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="571" parent="522" name="id">
+      <DasType>INTEGER|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="572" parent="522" name="url">
+      <DasType>VARCHAR|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="573" parent="522" name="user_id">
+      <DasType>INTEGER|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <foreign-key id="574" parent="522">
+      <ColNames>user_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>User</RefTableName>
+    </foreign-key>
+    <index id="575" parent="522" name="ix_Video_id">
       <ColNames>id</ColNames>
     </index>
-    <index id="565" parent="521" name="ix_Video_url">
+    <index id="576" parent="522" name="ix_Video_url">
       <ColNames>url</ColNames>
     </index>
-    <key id="566" parent="521">
+    <key id="577" parent="522">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>ix_Video_id</UnderlyingIndexName>
     </key>
-    <column id="567" parent="522" name="version_num">
+    <column id="578" parent="523" name="version_num">
       <DasType>VARCHAR(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <index id="568" parent="522" name="sqlite_autoindex_alembic_version_1">
+    <index id="579" parent="523" name="sqlite_autoindex_alembic_version_1">
       <ColNames>version_num</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="569" parent="522" name="alembic_version_pkc">
+    <key id="580" parent="523" name="alembic_version_pkc">
       <ColNames>version_num</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_alembic_version_1</UnderlyingIndexName>
     </key>
-    <column id="570" parent="523" name="type">
+    <column id="581" parent="524" name="type">
       <DasType>TEXT|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="571" parent="523" name="name">
+    <column id="582" parent="524" name="name">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="572" parent="523" name="tbl_name">
+    <column id="583" parent="524" name="tbl_name">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="573" parent="523" name="rootpage">
+    <column id="584" parent="524" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="574" parent="523" name="sql">
+    <column id="585" parent="524" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
