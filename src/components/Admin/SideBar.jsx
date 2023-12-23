@@ -27,7 +27,7 @@ const SideBar = () => {
           </Link>
         </Menu.Item>
         <Menu.Item key="events">
-          <Link to="/admin/event">
+          <Link to="/admin/events">
             <CalendarOutlined />
             События
           </Link>
