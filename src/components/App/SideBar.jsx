@@ -1,17 +1,14 @@
-import {useState} from "react";
 import Calendar from "react-calendar";
 
 import 'react-calendar/dist/Calendar.css';
 
-const SideBar = () => {
-  const [value, onChange] = useState(new Date());
-
+const SideBar = ({selectedDate, setSelectedDate}) => {
   return (
     <div className="sidebar">
       <div className="sidebar-calendar">
         <Calendar
-          onChange={onChange}
-          value={value}
+          onChange={setSelectedDate}
+          value={selectedDate}
         />
       </div>
     </div>
