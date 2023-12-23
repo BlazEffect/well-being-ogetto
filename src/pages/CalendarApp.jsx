@@ -18,16 +18,6 @@ const CalendarApp = () => {
   const [myEvents, setEvents] = useState(events);
   const [defaultDate, setDefaultDate] = useState(new Date());
 
-  const handleSelectSlot = useCallback(
-    ({start, end}) => {
-      const title = window.prompt('New Event name');
-      if (title) {
-        setEvents((prev) => [...prev, {start, end, title}]);
-      }
-    },
-    [setEvents]
-  );
-
   const handleSelectEvent = useCallback(
     (event) => window.alert(event.title),
     []
@@ -70,8 +60,6 @@ const CalendarApp = () => {
         events={myEvents}
         localizer={localizer}
         onSelectEvent={handleSelectEvent}
-        onSelectSlot={handleSelectSlot}
-        selectable
         scrollToTime={scrollToTime}
         views={views}
       />
