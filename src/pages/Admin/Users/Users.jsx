@@ -1,6 +1,6 @@
-import {Button, Space, Table} from "antd";
-import data from "@/data/users.json";
-import {PlusOutlined} from "@ant-design/icons";
+import {Space, Table} from "antd";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const columns = [
   {
@@ -32,15 +32,26 @@ const columns = [
 ];
 
 const Users = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const usersData = await axios.get('/api/all_user');
+    setUsers(usersData.data.users);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <Button type="primary" shape="round" icon={<PlusOutlined />} size="large">
-        Создать
-      </Button>
-
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={users}
+        loading={loading}
       />
     </div>
   )
