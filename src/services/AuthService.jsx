@@ -34,4 +34,8 @@ const login = async (tokenResponse) => {
   }
 }
 
-export {login};
+const logout = () => {
+  window.localStorage.removeItem('userData');
+}
+
+export {login, logout};

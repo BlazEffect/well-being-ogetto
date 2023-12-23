@@ -20,7 +20,13 @@ const AuthProvider = ({children}) => {
   const login = (tokenResponse) => {
     setIsLoading(true);
     authService.login(tokenResponse);
+    setIsLoggedIn(true);
     setIsLoading(false);
+  }
+
+  const logout = () => {
+    authService.logout();
+    setIsLoggedIn(false);
   }
 
   const authValue = useMemo(() => {
@@ -28,7 +34,8 @@ const AuthProvider = ({children}) => {
       isLoggedIn,
       isLoading,
       authData,
-      login
+      login,
+      logout
     };
   }, [isLoggedIn, isLoading, authData]);
 
