@@ -38,6 +38,7 @@ const AppHeader = () => {
       <div className="header-logo">
         <Link to="/">
           <img className="header-logo__image" src={logo} alt="logo"/>
+          <div className="header-logo__text">ByteBusters</div>
         </Link>
       </div>
 

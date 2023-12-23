@@ -80,3 +80,14 @@ h6 {
 .react-calendar {
     border: none;
 }
+
+.header-logo > a {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-logo__text {
+    font-size: 23px;
+    color: #fff;
+}
