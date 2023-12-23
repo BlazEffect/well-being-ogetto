@@ -3,6 +3,8 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+
+from app.media import get_user_by_token
 from models.core import Card, User
 from models.database import get_db
 from fastapi import HTTPException
@@ -101,3 +103,22 @@ def delete_user(user_id: int, token: str, session: Session = Depends(get_db)):
         return 200
     else:
         return 404
+
+
+@contr_router.delete('/delete_card')
+def delete_card(card_id: int, token: str, session: Session = Depends(get_db)):
+    user = get_user_by_token(token, session)
+
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    card = session.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Card not found")
+
+    if user.privilege == 2 or (user.privilege == 1 and card.user_id == user.id):
+        session.delete(card)
+        session.commit()
+        return {"message": "Card deleted successfully"}
+    else:
+        raise HTTPException(status_code=403, detail="Insufficient privileges")
