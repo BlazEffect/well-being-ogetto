@@ -9,7 +9,7 @@ import {GoogleOAuthProvider} from "@react-oauth/google";
 const { Content, Sider } = Layout;
 
 const AdminLayout = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, authData } = useContext(AuthContext);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -42,15 +42,13 @@ const AdminLayout = () => {
               borderRadius: borderRadiusLG
             }}
           >
-            <AdminRouter/>
-
-            {/*{isLoggedIn ? (
+            {isLoggedIn && authData.privilege === 2 ? (
               <AdminRouter/>
             ) : (
               <div>
                 Вы не авторизированны, чтобы зайти в панель администратора
               </div>
-            )}*/}
+            )}
           </Content>
         </Layout>
       </Layout>

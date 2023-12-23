@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {
   useEffect(() => {
     const storedData = localStorage.getItem("userData");
     if (storedData) {
-      setAuthData(storedData);
+      setAuthData(JSON.parse(storedData));
       setIsLoggedIn(true);
     }
     setIsLoading(false);
