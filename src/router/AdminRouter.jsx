@@ -2,6 +2,7 @@ import {useRoutes} from 'react-router-dom';
 import NotFound from "@/pages/NotFound";
 import Dashboard from "@/pages/Admin/Dashboard";
 import Users from "@/pages/Admin/Users/Users";
+import Events from "@/pages/Admin/Users/Events";
 
 const AdminRouter = () => {
   return useRoutes([
@@ -15,7 +16,7 @@ const AdminRouter = () => {
     },
     {
       path: '/admin/events',
-      element: <Users/>,
+      element: <Events/>,
     },
     {
       path: '*',
