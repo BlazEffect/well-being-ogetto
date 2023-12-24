@@ -14,4 +14,12 @@ const getAllUsers = async () => {
   }
 }
 
-export {getAllUsers};
+const deleteUser = async (userId, token) => {
+  try {
+    await axios.delete('/api/delete_user?user_id=' + userId + '&token=' + token);
+  } catch (error) {
+    throw new Error('Ошибка при выполнении запроса');
+  }
+}
+
+export {getAllUsers, deleteUser};
