@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
+import React, {useState, useCallback, useMemo, useEffect} from 'react';
+import {Calendar, Views, momentLocalizer} from 'react-big-calendar';
 import CustomWeekView from '@/components/App/CustomWeekView';
-import { useParams } from 'react-router-dom';
-import { Modal } from 'antd'; 
+import {useParams} from 'react-router-dom';
+import {Modal} from 'antd';
 import 'moment-timezone';
 import 'moment/locale/ru';
 import moment from 'moment';
@@ -14,13 +14,12 @@ moment.locale('ru');
 const localizer = momentLocalizer(moment);
 
 const CalendarApp = () => {
-  const { dateYear, dateMonth, dateDay } = useParams();
+  const {dateYear, dateMonth, dateDay} = useParams();
 
   const [myEvents, setEvents] = useState(events);
   const [defaultDate, setDefaultDate] = useState(new Date());
-  const [modalVisible, setModalVisible] = useState(false); 
+  const [modalVisible, setModalVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-
 
   const handleSelectEvent = useCallback(
     (event) => {
@@ -29,7 +28,6 @@ const CalendarApp = () => {
     },
     [setModalVisible, setSelectedEvent]
   );
-
 
   const handleNavigate = useCallback(
     (newDate) => {
@@ -55,14 +53,14 @@ const CalendarApp = () => {
     }
   }, [dateYear, dateMonth, dateDay]);
 
-  const { scrollToTime } = useMemo(
+  const {scrollToTime} = useMemo(
     () => ({
       scrollToTime: new Date(1970, 1, 1, 6),
     }),
     []
   );
 
-  const { views } = useMemo(() => ({
+  const {views} = useMemo(() => ({
     views: {
       month: false,
       week: CustomWeekView,
@@ -91,17 +89,17 @@ const CalendarApp = () => {
         onCancel={handleModalCancel}
       >
         <label>
-          Заголовок: <input name="title" value={selectedEvent?.title} />
+          Заголовок: <input name="title" value={selectedEvent?.title}/>
         </label>
-        <br />
+        <br/>
         <label>
-          Описание: <input name="description" value={selectedEvent?.description} />
+          Описание: <input name="description" value={selectedEvent?.description}/>
         </label>
-        <br />
+        <br/>
         <label>
           Начало: {moment(selectedEvent?.start).format('LLL')}
         </label>
-        <br />
+        <br/>
         <label>
           Окончание: {moment(selectedEvent?.end).format('LLL')}
         </label>
