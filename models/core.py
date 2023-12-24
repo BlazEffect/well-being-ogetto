@@ -17,7 +17,6 @@ class User(Base):
     token = Column(String, unique=True)
     created_at = Column(Integer, index=True)
 
-    videos = relationship("Video", back_populates="user")
     cards = relationship("Card", back_populates="user")
     liked_cards = relationship("Card", secondary="UserCardLike", backref="users_liked")
 
@@ -39,15 +38,6 @@ class UserCardLike(Base):
     card = relationship("Card")
 
 
-class Video(Base):
-    __tablename__ = "Video"
-    id = Column(Integer, primary_key=True, index=True)
-    url = Column(String, index=True)
-    user_id = Column(Integer, ForeignKey('User.id'))
-
-    user = relationship("User", back_populates="videos")
-
-
 class Card(Base):
     __tablename__ = "Card"
     id = Column(Integer, primary_key=True, index=True)
@@ -56,6 +46,7 @@ class Card(Base):
     time_start = Column(Integer, index=True)
     time_end = Column(Integer, index=True)
     user_id = Column(Integer, ForeignKey('User.id'))
+    url = Column(String, index=True)
     likes = Column(Integer, index=True)
 
     user = relationship("User", back_populates="cards")

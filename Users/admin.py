@@ -27,8 +27,8 @@ def get_perm_by_token(token: str, session: Session = get_db):
 
 
 @contr_router.post('/add_card')
-def card(name: str, description: str, time_start: datetime, time_end: datetime, session: Session = Depends(get_db)):
-    new_card = Card(name=name, description=description, time_start=time_start, time_end=time_end)
+def card(name: str, description: str, time_start: datetime, time_end: datetime, url:str, session: Session = Depends(get_db)):
+    new_card = Card(name=name, description=description, time_start=time_start, time_end=time_end, url=url)
     session.add(new_card)
     session.commit()
     return {"message": "Card added successfully"}
@@ -97,12 +97,15 @@ def delete_user(user_id: int, token: str, session: Session = Depends(get_db)):
     user = session.query(User).filter(User.id == user_id).first()
     admin = get_admin(session, token)
 
+    if user.token == token:
+        raise HTTPException(status_code=400, detail="Can't delete yourself")
+
     if admin:
         session.delete(user)
         session.commit()
-        return 200
+        return {"message": "User deleted successfully"}
     else:
-        return 404
+        raise HTTPException(status_code=403, detail="Insufficient privileges")
 
 
 @contr_router.delete('/delete_card')
