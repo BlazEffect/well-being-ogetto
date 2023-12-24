@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo, useEffect} from 'react';
+import {useState, useCallback, useMemo, useEffect} from 'react';
 import {Calendar, Views, momentLocalizer} from 'react-big-calendar';
 import CustomWeekView from '@/components/App/CustomWeekView';
 import {useParams} from 'react-router-dom';
@@ -6,8 +6,8 @@ import {Modal} from 'antd';
 import 'moment-timezone';
 import 'moment/locale/ru';
 import moment from 'moment';
-import events from '@/data/event';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import * as eventService from "@/services/EventService.jsx";
 
 moment.tz.setDefault('Europe/Moscow');
 moment.locale('ru');
@@ -16,7 +16,7 @@ const localizer = momentLocalizer(moment);
 const CalendarApp = () => {
   const {dateYear, dateMonth, dateDay} = useParams();
 
-  const [myEvents, setEvents] = useState(events);
+  const [events, setEvents] = useState([]);
   const [defaultDate, setDefaultDate] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -60,6 +60,10 @@ const CalendarApp = () => {
     []
   );
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const {views} = useMemo(() => ({
     views: {
       month: false,
@@ -68,13 +72,32 @@ const CalendarApp = () => {
     },
   }), []);
 
+  const fetchData = async () => {
+    let allEvents = await eventService.getAllEvents();
+
+    allEvents = allEvents.map(item => {
+      const startTime = moment.utc(item.time_start - 10800000).toDate();
+      const endTime = moment.utc(item.time_end - 10800000).toDate();
+
+      return {
+        id: item.key,
+        title: item.name,
+        description: item.description,
+        start: startTime,
+        end: endTime
+      }
+    });
+
+    setEvents(allEvents);
+  }
+
   return (
     <div>
       <Calendar
         date={defaultDate}
         onNavigate={handleNavigate}
         defaultView={Views.WEEK}
-        events={myEvents}
+        events={events}
         localizer={localizer}
         onSelectEvent={handleSelectEvent}
         scrollToTime={scrollToTime}
@@ -84,7 +107,7 @@ const CalendarApp = () => {
       {/* Модальное окно */}
       <Modal
         title="Event Details"
-        visible={modalVisible}
+        open={modalVisible}
         onOk={handleModalOk}
         onCancel={handleModalCancel}
       >
