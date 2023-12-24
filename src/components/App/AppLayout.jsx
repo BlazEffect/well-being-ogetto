@@ -5,7 +5,7 @@ import SideBar from "@/components/App/SideBar";
 import {GoogleOAuthProvider} from "@react-oauth/google";
 import {useEffect, useState} from "react";
 import moment from "moment";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const { Content, Sider } = Layout;
 
@@ -14,13 +14,18 @@ const AppLayout = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isCalendar = location.pathname.startsWith("/calendar/");
+
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     const date = moment(selectedDate).format("YYYY-MM-DD").split('-');
 
-    navigate(`/${date[0]}/${date[1]}/${date[2]}`);
+    if (isCalendar) {
+      navigate(`/calendar/${date[0]}/${date[1]}/${date[2]}`);
+    }
   }, [selectedDate]);
 
   return (
