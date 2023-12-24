@@ -26,6 +26,8 @@ const Events = () => {
   const deleteEvent = async (cardId, token) => {
     setLoading(true);
     await eventService.deleteEvent(cardId, token);
+    const updatedEvents = events.filter(item => item.key !== cardId);
+    setEvents(updatedEvents);
     setLoading(false);
   }
 

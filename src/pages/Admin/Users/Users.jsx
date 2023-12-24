@@ -22,6 +22,8 @@ const Users = () => {
   const deleteUser = async (userId, token) => {
     setLoading(true);
     await userService.deleteUser(userId, token);
+    const updatedUsers = users.filter(item => item.key !== userId);
+    setUsers(updatedUsers);
     setLoading(false);
   }
 
