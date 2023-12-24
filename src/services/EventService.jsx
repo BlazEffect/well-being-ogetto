@@ -16,6 +16,18 @@ const addEvent = async (name, description, timeStart, timeEnd, url) => {
   }
 }
 
+const getEventById = async (cardId) => {
+  try {
+    const card = await axios.get('/api/media/card/' + cardId);
+
+    if (card.status === 200) {
+      return card.data;
+    }
+  } catch (error) {
+    throw new Error('Ошибка при выполнении запроса');
+  }
+}
+
 const deleteEvent = async (cardId, token) => {
   try {
     await axios.delete('/api/delete_card?card_id=' + cardId + '&token=' + token);
@@ -24,4 +36,4 @@ const deleteEvent = async (cardId, token) => {
   }
 }
 
-export {getAllEvents, deleteEvent, addEvent};
+export {getAllEvents, deleteEvent, addEvent, getEventById};

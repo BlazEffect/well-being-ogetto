@@ -1,22 +1,25 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import * as eventService from "@/services/EventService.jsx";
 
 const Event = () => {
   const {eventId} = useParams();
 
-  const [url, setUrl] = useState('');
+  const [dataEvent, setDataEvent] = useState('');
 
   useEffect(() => {
-
+    fetchData(eventId);
   }, []);
+
+  const fetchData = async (eventId) => {
+    const event = await eventService.getEventById(eventId);
+
+    setDataEvent(event.url);
+  }
 
   return (
     <div>
-      <iframe width="1902" height="781" src="https://www.youtube.com/embed/Z_FZh-P8c54"
-              title="Усмирение Робота на Opel Astra H! Епучая Молния №1" frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen>
-      </iframe>
+      dangerouslySetInnerHTML={{__html: dataEvent}}
     </div>
   )
 }
