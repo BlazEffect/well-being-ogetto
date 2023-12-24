@@ -4,13 +4,11 @@ import moment from "moment";
 import * as eventService from "@/services/EventService"
 import {AuthContext} from "@/contexts/AuthContext.jsx";
 import {PlusOutlined} from "@ant-design/icons";
-import dayjs from "dayjs";
 
 moment.tz.setDefault('Europe/Moscow');
 moment.locale('ru');
 
 const { TextArea } = Input;
-const { RangePicker } = DatePicker;
 
 const Events = () => {
   const [form] = Form.useForm();
