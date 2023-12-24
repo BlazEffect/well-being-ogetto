@@ -42,7 +42,7 @@ class Card(Base):
     __tablename__ = "Card"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, unique=True)
-    description = Column(String, index=True, unique=True)
+    description = Column(String, unique=True)
     tags = Column(String, index=True)
     category = Column(String, index=True)
     time_start = Column(Integer, index=True)
@@ -63,7 +63,8 @@ class Card(Base):
             "time_start": self.time_start,
             "time_end": self.time_end,
             "user_id": self.user_id,
-            "user_name": user_name
+            "user_name": user_name,
+            "url": self.url
         }
 
 
