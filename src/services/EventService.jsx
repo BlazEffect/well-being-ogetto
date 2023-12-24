@@ -8,6 +8,14 @@ const getAllEvents = async () => {
   }
 }
 
+const addEvent = async (name, description, timeStart, timeEnd, url) => {
+  try {
+    await axios.post('/api/add_card?name=' + name + '&description=' + description + '&time_start=' + timeStart + '&time_end=' + timeEnd + '&url=' + url)
+  } catch (error) {
+    throw new Error('Ошибка при выполнении запроса');
+  }
+}
+
 const deleteEvent = async (cardId, token) => {
   try {
     await axios.delete('/api/delete_card?card_id=' + cardId + '&token=' + token);
@@ -16,4 +24,4 @@ const deleteEvent = async (cardId, token) => {
   }
 }
 
-export {getAllEvents, deleteEvent};
+export {getAllEvents, deleteEvent, addEvent};
