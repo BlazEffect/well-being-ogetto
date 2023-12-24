@@ -1,6 +1,7 @@
 import {useRoutes} from 'react-router-dom';
 import NotFound from "@/pages/NotFound";
 import CalendarApp from "@/pages/CalendarApp";
+import Event from "@/pages/Event";
 import Login from "@/pages/Auth/Login";
 
 const AppRouter = () => {
@@ -10,8 +11,12 @@ const AppRouter = () => {
       element: <Login/>,
     },
     {
-      path: '/:dateYear?/:dateMonth?/:dateDay?',
+      path: '/calendar/:dateYear/:dateMonth/:dateDay',
       element: <CalendarApp/>,
+    },
+    {
+      path: '/event/:eventId',
+      element: <Event/>
     },
     {
       path: '*',
