@@ -72,8 +72,8 @@ def join_card(card_id: int, user_id: int, session: Session = Depends(get_db)):
 
 
 @media_router.get('/search_card')
-def search_card_by_title(title: str, session: Session = Depends(get_db)):
-    matching_cards = session.query(Card).filter(Card.title.ilike(f"%{title}%")).all()
+def search_card_by_title(name: str, session: Session = Depends(get_db)):
+    matching_cards = session.query(Card).filter(Card.name.ilike(f"%{name}%")).all()
 
     if not matching_cards:
         raise HTTPException(404)

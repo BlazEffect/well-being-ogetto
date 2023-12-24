@@ -446,8 +446,8 @@
     <routine id="176" parent="1" name="rtreenode"/>
     <schema id="177" parent="1" name="main">
       <Current>1</Current>
-      <IntrospectionTimestamp>2023-12-24.02:15:10.143</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2023-12-23.23:15:10</LocalIntrospectionTimestamp>
+      <IntrospectionTimestamp>2023-12-24.12:03:34.293</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2023-12-24.09:03:34</LocalIntrospectionTimestamp>
     </schema>
     <argument id="178" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1473,39 +1473,42 @@
     <table id="519" parent="177" name="Participation"/>
     <table id="520" parent="177" name="User"/>
     <table id="521" parent="177" name="UserCardLike"/>
-    <table id="522" parent="177" name="Video"/>
-    <table id="523" parent="177" name="alembic_version"/>
-    <table id="524" parent="177" name="sqlite_master">
+    <table id="522" parent="177" name="alembic_version"/>
+    <table id="523" parent="177" name="sqlite_master">
       <System>1</System>
     </table>
-    <column id="525" parent="518" name="id">
+    <column id="524" parent="518" name="id">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="526" parent="518" name="name">
+    <column id="525" parent="518" name="name">
       <DasType>VARCHAR|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="527" parent="518" name="description">
+    <column id="526" parent="518" name="description">
       <DasType>VARCHAR|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="528" parent="518" name="time_start">
+    <column id="527" parent="518" name="time_start">
       <DasType>DATETIME|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="529" parent="518" name="time_end">
+    <column id="528" parent="518" name="time_end">
       <DasType>DATETIME|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="530" parent="518" name="user_id">
+    <column id="529" parent="518" name="user_id">
       <DasType>INTEGER|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="531" parent="518" name="likes">
+    <column id="530" parent="518" name="likes">
       <DasType>INTEGER|0s</DasType>
       <Position>7</Position>
+    </column>
+    <column id="531" parent="518" name="url">
+      <DasType>VARCHAR|0s</DasType>
+      <Position>8</Position>
     </column>
     <foreign-key id="532" parent="518">
       <ColNames>user_id</ColNames>
@@ -1664,67 +1667,38 @@
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="571" parent="522" name="id">
-      <DasType>INTEGER|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="572" parent="522" name="url">
-      <DasType>VARCHAR|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="573" parent="522" name="user_id">
-      <DasType>INTEGER|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <foreign-key id="574" parent="522">
-      <ColNames>user_id</ColNames>
-      <RefColNames>id</RefColNames>
-      <RefTableName>User</RefTableName>
-    </foreign-key>
-    <index id="575" parent="522" name="ix_Video_id">
-      <ColNames>id</ColNames>
-    </index>
-    <index id="576" parent="522" name="ix_Video_url">
-      <ColNames>url</ColNames>
-    </index>
-    <key id="577" parent="522">
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>ix_Video_id</UnderlyingIndexName>
-    </key>
-    <column id="578" parent="523" name="version_num">
+    <column id="571" parent="522" name="version_num">
       <DasType>VARCHAR(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <index id="579" parent="523" name="sqlite_autoindex_alembic_version_1">
+    <index id="572" parent="522" name="sqlite_autoindex_alembic_version_1">
       <ColNames>version_num</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="580" parent="523" name="alembic_version_pkc">
+    <key id="573" parent="522" name="alembic_version_pkc">
       <ColNames>version_num</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_alembic_version_1</UnderlyingIndexName>
     </key>
-    <column id="581" parent="524" name="type">
+    <column id="574" parent="523" name="type">
       <DasType>TEXT|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="582" parent="524" name="name">
+    <column id="575" parent="523" name="name">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="583" parent="524" name="tbl_name">
+    <column id="576" parent="523" name="tbl_name">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="584" parent="524" name="rootpage">
+    <column id="577" parent="523" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="585" parent="524" name="sql">
+    <column id="578" parent="523" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
