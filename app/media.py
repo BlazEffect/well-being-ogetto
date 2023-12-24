@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from models.core import Card, User, Participation
+from models.core import Card, User, Participation, Comment
 from models.database import get_db
 
 media_router = APIRouter(prefix='/api/media')
@@ -27,17 +27,8 @@ def get_user_info(user_id: int, session: Session):
 @media_router.get('/bydate')
 def datecard(date: str, session: Session = Depends(get_db)):
     cards = session.query(Card).filter(Card.time_start == date).all()
-    cards_data = []
-    for card in cards:
-        cards_data.append({
-            "id": card.id,
-            "name": card.name,
-            "title": card.title,
-            "time_start": card.time_start,
-            "time_end": card.time_end,
-            "user_info": get_user_info(card.user_id, session)
-        })
-    return cards_data
+    serialized_cards = [card.serialize() for card in cards]
+    return {"cards by date": serialized_cards}
 
 
 @media_router.get('/byuser/{user_id}')
@@ -102,3 +93,50 @@ def like_card(card_id: int, token: str, session: Session = Depends(get_db)):
             raise HTTPException(404,"Card not found")
     else:
         raise HTTPException(401, "Invalid token")
+
+@media_router.get('/card/{card_id}')
+def get_card_by_id(card_id: int, session: Session = Depends(get_db)):
+    card = session.query(Card).filter(Card.id == card_id).first()
+    if card:
+        serialized_card = card.serialize()
+        return serialized_card
+    else:
+        raise HTTPException(404, "Card not found")
+
+
+@media_router.post('/add_comment')
+def add_comment(card_id: int, token: str, text: str, session: Session = Depends(get_db)):
+    user = get_user_by_token(token, session)
+    card = session.query(Card).filter(Card.id == card_id).first()
+
+    if not user:
+        raise HTTPException(401, "Invalid token")
+
+    if not card:
+        raise HTTPException(404, "Card not found")
+
+    new_comment = Comment(text=text, user_id=user.id, card_id=card_id)
+    session.add(new_comment)
+    session.commit()
+
+    return {"message": "Comment added successfully"}
+
+
+@media_router.get('/card_comments/{card_id}')
+def get_comments_for_card(card_id: int, session: Session = Depends(get_db)):
+    card = session.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        return {"message": "Card not found"}
+
+    comments = session.query(Comment).filter(Comment.card_id == card_id).all()
+    serialized_comments = [comment.serialize() for comment in comments]
+
+    return {"comments": serialized_comments}
+
+
+@media_router.get('/cards_by_category/{category}')
+def get_cards_by_category(category: str, session: Session = Depends(get_db)):
+    cards = session.query(Card).filter(Card.category == category).all()
+    serialized_cards = [card.serialize() for card in cards]
+
+    return {"cards": serialized_cards}

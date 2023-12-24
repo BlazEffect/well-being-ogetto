@@ -1,8 +1,11 @@
+import re
 from datetime import datetime
 from typing import Optional
 
+from embeddify import Embedder
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from starlette import status
 
 from app.media import get_user_by_token
 from models.core import Card, User
@@ -10,6 +13,15 @@ from models.database import get_db
 from fastapi import HTTPException
 
 contr_router = APIRouter(prefix='/api')
+
+
+def extract_video_id(url):
+    pattern = r"(?<=v=)[\w-]+|(?<=be/)[\w-]+"
+    match = re.search(pattern, url)
+    if match:
+        return str(match.group(0))
+    else:
+        return None
 
 
 def get_admin(session: Session, token: str) -> Optional[User]:
@@ -27,8 +39,21 @@ def get_perm_by_token(token: str, session: Session = get_db):
 
 
 @contr_router.post('/add_card')
-def card(name: str, description: str, time_start: datetime, time_end: datetime, url:str, session: Session = Depends(get_db)):
-    new_card = Card(name=name, description=description, time_start=time_start, time_end=time_end, url=url)
+def card(
+        name: str, description: str, time_start, time_end, url: str, token: str, tags:str, category:str, session: Session = Depends(get_db)
+):
+    user = get_user_by_token(token, session)
+    if user.privilege < 1:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Insufficient privileges"
+        )
+    embedded = Embedder()
+
+    url = embedded(url)
+    new_card = Card(
+        name=name, description=description, time_start=time_start,
+        time_end=time_end, url=(url), user_id=user.id, tags=tags, category=category)
     session.add(new_card)
     session.commit()
     return {"message": "Card added successfully"}
@@ -125,3 +150,40 @@ def delete_card(card_id: int, token: str, session: Session = Depends(get_db)):
         return {"message": "Card deleted successfully"}
     else:
         raise HTTPException(status_code=403, detail="Insufficient privileges")
+
+@contr_router.put('/update_card/{card_id}')
+def update_card(
+    card_id: int,
+    name: str,
+    description: str,
+    time_start,
+    time_end,
+    url: str,
+    token: str,
+    tags: str,
+    category: str,
+    session: Session = Depends(get_db)
+):
+    user = get_user_by_token(token, session)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    card = session.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Card not found")
+
+    # Проверка прав доступа пользователя
+    if user.privilege != 2 and card.user_id != user.id:
+        raise HTTPException(status_code=403, detail="Insufficient privileges")
+
+    # Обновление информации о карточке
+    card.name = name
+    card.description = description
+    card.time_start = time_start
+    card.time_end = time_end
+    card.url = url
+    card.tags = tags
+    card.category = category
+
+    session.commit()
+    return {"message": "Card updated successfully"}

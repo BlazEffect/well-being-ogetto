@@ -23,7 +23,7 @@ class User(Base):
     def serialize(self):
         return {
             "key": self.id,
-            "name": self.first_name + self.last_name,
+            "name": f"{self.first_name} {self.last_name}",
             "email": self.mail,
             "role": self.privilege
         }
@@ -37,11 +37,14 @@ class UserCardLike(Base):
     user = relationship("User")
     card = relationship("Card", overlaps="liked_cards,users_liked")
 
+
 class Card(Base):
     __tablename__ = "Card"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, unique=True)
     description = Column(String, index=True, unique=True)
+    tags = Column(String, index=True)
+    category = Column(String, index=True)
     time_start = Column(Integer, index=True)
     time_end = Column(Integer, index=True)
     user_id = Column(Integer, ForeignKey('User.id'))
@@ -49,6 +52,7 @@ class Card(Base):
     likes = Column(Integer, index=True)
 
     user = relationship("User", back_populates="cards")
+    comments = relationship("Comment", back_populates="card")
 
     def serialize(self):
         user_name = f"{self.user.first_name} {self.user.last_name}" if self.user else None
@@ -70,3 +74,24 @@ class Participation(Base):
     event_id = Column(Integer, ForeignKey('Card.id'))
     user = relationship("User", backref="participations")
     event = relationship("Card")
+
+
+class Comment(Base):
+    __tablename__ = "Comment"
+    id = Column(Integer, primary_key=True, index=True)
+    text = Column(String)
+    user_id = Column(Integer, ForeignKey('User.id'))
+    card_id = Column(Integer, ForeignKey('Card.id'))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User")
+    card = relationship("Card", back_populates="comments")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "text": self.text,
+            "user_id": self.user_id,
+            "card_id": self.card_id,
+            "created_at": self.created_at
+        }
