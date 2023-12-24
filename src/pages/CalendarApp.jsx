@@ -26,7 +26,6 @@ const CalendarApp = () => {
 
   const handleSelectEvent = useCallback(
     (event) => {
-      console.log(isLoggedIn);
       if (isLoggedIn && authData.privilege > 0) {
         setModalVisible(true);
         setSelectedEvent(event);
