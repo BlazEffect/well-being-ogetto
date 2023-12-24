@@ -107,7 +107,7 @@ const Events = () => {
     },
     {
       title: 'Пользователь',
-      dataIndex: 'user_id',
+      dataIndex: 'user_name',
       key: 'user_id',
     },
     {
