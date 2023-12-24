@@ -35,8 +35,7 @@ class UserCardLike(Base):
     user_id = Column(Integer, ForeignKey('User.id'))
     card_id = Column(Integer, ForeignKey('Card.id'))
     user = relationship("User")
-    card = relationship("Card")
-
+    card = relationship("Card", overlaps="liked_cards,users_liked")
 
 class Card(Base):
     __tablename__ = "Card"
@@ -52,6 +51,7 @@ class Card(Base):
     user = relationship("User", back_populates="cards")
 
     def serialize(self):
+        user_name = f"{self.user.first_name} {self.user.last_name}" if self.user else None
         return {
             "key": self.id,
             "name": self.name,
@@ -59,7 +59,7 @@ class Card(Base):
             "time_start": self.time_start,
             "time_end": self.time_end,
             "user_id": self.user_id,
-            "user_name": f"{self.user.first_name} {self.user.last_name}"
+            "user_name": user_name
         }
 
 
