@@ -1,4 +1,4 @@
-import {useState, useCallback, useMemo, useEffect} from 'react';
+import {useState, useCallback, useMemo, useEffect, useContext} from 'react';
 import {Calendar, Views, momentLocalizer} from 'react-big-calendar';
 import CustomWeekView from '@/components/App/CustomWeekView';
 import {useParams} from 'react-router-dom';
@@ -8,6 +8,7 @@ import 'moment/locale/ru';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import * as eventService from "@/services/EventService.jsx";
+import {AuthContext} from "@/contexts/AuthContext.jsx";
 
 moment.tz.setDefault('Europe/Moscow');
 moment.locale('ru');
@@ -21,12 +22,17 @@ const CalendarApp = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  const { isLoggedIn, authData } = useContext(AuthContext);
+
   const handleSelectEvent = useCallback(
     (event) => {
-      setModalVisible(true);
-      setSelectedEvent(event);
+      console.log(isLoggedIn);
+      if (isLoggedIn && authData.privilege > 0) {
+        setModalVisible(true);
+        setSelectedEvent(event);
+      }
     },
-    [setModalVisible, setSelectedEvent]
+    [setModalVisible, setSelectedEvent, isLoggedIn, authData]
   );
 
   const handleNavigate = useCallback(
@@ -37,12 +43,10 @@ const CalendarApp = () => {
   );
 
   const handleModalOk = useCallback(() => {
-    // Обработка подтверждения модального окна
     setModalVisible(false);
   }, [setModalVisible]);
 
   const handleModalCancel = useCallback(() => {
-    // Обработка закрытия модального окна
     setModalVisible(false);
   }, [setModalVisible]);
 
