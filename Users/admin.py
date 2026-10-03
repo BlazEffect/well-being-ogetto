@@ -9,7 +9,7 @@ from starlette import status
 
 from app.media import get_user_by_token
 from models.core import Card, User
-from models.database import get_db
+from app.database.database import get_db
 from fastapi import HTTPException
 
 contr_router = APIRouter(prefix='/api')

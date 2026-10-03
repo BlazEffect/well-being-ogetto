@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-authlib
-python-dotenv
-jinja2
-itsdangerous
