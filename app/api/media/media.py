@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from models.core import Card, User, Participation, Comment
+from app.api.shared.models import Card, User, Participation, Comment
 from app.database.database import get_db
 
 media_router = APIRouter(prefix='/api/media')

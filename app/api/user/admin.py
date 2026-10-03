@@ -7,8 +7,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette import status
 
-from app.media import get_user_by_token
-from models.core import Card, User
+from app.api.media.media import get_user_by_token
+from app.api.shared.models import Card, User
 from app.database.database import get_db
 from fastapi import HTTPException
 

@@ -4,9 +4,8 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
 
-from Users.admin import contr_router
 from app.core.config import settings
-from app.media import media_router
+from app.api.auth import router as auth_router
 
 logging.basicConfig(level=settings.LOG_LEVEL)
 logger = logging.getLogger(__name__)
@@ -14,7 +13,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
-    description="API для Anime Cinema",
+    description="API для Booktime",
 )
 
 app.add_middleware(
@@ -27,6 +26,4 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-app.include_router(contr_router)
-app.include_router(media_router)
-
+app.include_router(auth_router)
